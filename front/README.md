@@ -1,48 +1,66 @@
-# Yoga
+# Front Yoga App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.16.
+Application Angular 19 du studio de yoga.
 
-## Start the project
+## Installation et lancement
 
-Git clone:
+Depuis le dossier `front` :
 
-> git clone https://github.com/OpenClassrooms-Student-Center/P5-Full-Stack-testing
+```bash
+npm install
+npm start
+```
 
-Go inside folder:
+L'application est disponible sur `http://localhost:4200`. Les requêtes `/api`
+sont redirigées vers le back sur `http://localhost:8080`.
 
-> cd yoga
+## Tests Jest
 
-Install dependencies:
+Exécuter les tests unitaires et d'intégration avec le rapport de couverture :
 
-> npm install
+```bash
+npm run test:coverage
+```
 
-Launch Front-end:
+Le seuil est fixé à 80 % pour les statements, branches, fonctions et lignes.
+Le rapport HTML est disponible dans :
 
-> npm run start;
+```text
+coverage/jest/lcov-report/index.html
+```
 
+Pour exécuter les tests en continu :
 
-### Test
+```bash
+npm run test:watch
+```
 
-#### E2E
+## Tests E2E Cypress
 
-Launching e2e test:
+Exécuter les tests E2E en mode headless et générer le rapport de couverture :
 
-> npm run e2e
+```bash
+npm run e2e:test
+```
 
-Generate coverage report (you should launch e2e test before):
+Cette commande lance successivement l'application instrumentée, les scénarios
+Cypress puis le contrôle des seuils Istanbul. Le rapport HTML est disponible
+dans :
 
-> npm run e2e:coverage
+```text
+coverage/lcov-report/index.html
+```
 
-Report is available here:
+Pour ouvrir Cypress en mode interactif :
 
-> front/coverage/lcov-report/index.html
+```bash
+npm run e2e
+```
 
-#### Unitary test
+## Build
 
-Launching test:
+```bash
+npm run build
+```
 
-> npm run test
-
-for following change:
-
-> npm run test:watch
+La sortie de production est générée dans `dist/yoga`.
