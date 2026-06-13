@@ -123,6 +123,25 @@ La capture d'écran ci-dessous résume les étapes précédentes :
 
 ## Ressources
 
+## Tests
+
+Exécuter les tests unitaires Mockito, les tests d'intégration Spring MVC et le
+contrôle de couverture JaCoCo :
+
+```bash
+mvn verify
+```
+
+Le build échoue si la couverture globale descend sous 80 % pour les
+instructions, les branches, les lignes ou les méthodes. Le package `dto` est
+exclu du calcul, conformément au plan de test.
+
+Le rapport HTML est disponible dans :
+
+```text
+target/site/jacoco/index.html
+```
+
 
 ### Collection Postman
 

@@ -90,6 +90,10 @@ mvn verify
 Le rapport HTML JaCoCo est généré dans
 `back/target/site/jacoco/index.html`. Le package DTO est exclu de la couverture.
 
+La commande vérifie un minimum de 80 % pour les instructions, les branches,
+les lignes et les méthodes. La suite contient des tests unitaires Mockito et
+des tests d'intégration `@WebMvcTest` pour tous les controllers.
+
 ## Build
 
 ```bash
