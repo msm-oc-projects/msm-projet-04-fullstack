@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "start": "ng serve",
+    "build": "ng build",
     "test": "jest",
+    "test:coverage": "jest --coverage --runInBand",
     "test:watch": "jest --watch",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "e2e:ci": "ng run yoga:e2e-ci",
-    "e2e:coverage": "npx nyc report --reporter=lcov --reporter=text-summary",
+    "e2e:coverage": "nyc report --reporter=html --reporter=lcov --reporter=text-summary --check-coverage",
+    "e2e:test": "npm run e2e:ci && npm run e2e:coverage",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
