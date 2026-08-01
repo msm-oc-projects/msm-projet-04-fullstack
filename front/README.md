@@ -1,48 +1,100 @@
-# Yoga
+# Front Yoga App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.16.
+Application Angular 19 du studio de yoga.
 
-## Start the project
+## Installation et lancement
 
-Git clone:
+Depuis le dossier `front` :
 
-> git clone https://github.com/OpenClassrooms-Student-Center/P5-Full-Stack-testing
+```bash
+npm ci
+npm start
+```
 
-Go inside folder:
+L'application est disponible sur `http://localhost:4200`. Les requêtes `/api`
+sont redirigées vers le back sur `http://localhost:8080`.
 
-> cd yoga
+## Tests Jest
 
-Install dependencies:
+Exécuter les tests unitaires et d'intégration avec le rapport de couverture :
 
-> npm install
+```bash
+npm run test:coverage
+```
 
-Launch Front-end:
+Le seuil est fixé à 80 % pour les statements, branches, fonctions et lignes.
+Le rapport HTML est disponible dans :
 
-> npm run start;
+```text
+coverage/jest/lcov-report/index.html
+```
 
+Résultats vérifiés :
 
-### Test
+```text
+16 suites réussies sur 16
+47 tests réussis sur 47
+100 % statements, branches, fonctions et lignes
+```
 
-#### E2E
+La suite comprend 20 tests unitaires et 27 tests d'intégration de composants,
+soit 57,45 % de tests d'intégration. Ces derniers rendent les templates avec
+`TestBed` et vérifient notamment les formulaires, les rôles utilisateur, la
+navigation et les interactions avec les services substitués.
 
-Launching e2e test:
+Pour exécuter les tests en continu :
 
-> npm run e2e
+```bash
+npm run test:watch
+```
 
-Generate coverage report (you should launch e2e test before):
+## Tests E2E Cypress
 
-> npm run e2e:coverage
+Exécuter les tests E2E en mode headless et générer le rapport de couverture :
 
-Report is available here:
+```bash
+npm run e2e:test
+```
 
-> front/coverage/lcov-report/index.html
+Cette commande lance successivement l'application instrumentée, les scénarios
+Cypress puis le contrôle des seuils Istanbul. Le rapport HTML est disponible
+dans :
 
-#### Unitary test
+```text
+coverage/lcov-report/index.html
+```
 
-Launching test:
+Résultats vérifiés :
 
-> npm run test
+```text
+3 spécifications réussies sur 3
+18 scénarios réussis sur 18
+```
 
-for following change:
+| Indicateur | Couverture |
+| --- | ---: |
+| Statements | 96,17 % |
+| Branches | 95,19 % |
+| Fonctions | 96,10 % |
+| Lignes | 95,80 % |
 
-> npm run test:watch
+Si `ELECTRON_RUN_AS_NODE` est défini dans l'environnement Bash, le neutraliser
+uniquement pour la commande Cypress :
+
+```bash
+env -u ELECTRON_RUN_AS_NODE npm run e2e:test
+```
+
+Pour ouvrir Cypress en mode interactif :
+
+```bash
+npm run e2e
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+La sortie de production est générée dans `dist/yoga`.

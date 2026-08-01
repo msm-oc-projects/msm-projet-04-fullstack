@@ -123,6 +123,44 @@ La capture d'écran ci-dessous résume les étapes précédentes :
 
 ## Ressources
 
+## Tests
+
+Exécuter les tests unitaires Mockito, les tests d'intégration Spring MVC et le
+contrôle de couverture JaCoCo :
+
+```bash
+mvn clean verify
+```
+
+Le build échoue si la couverture globale descend sous 80 % pour les
+instructions, les branches, les lignes ou les méthodes. Le package `dto` est
+exclu du calcul, conformément au plan de test.
+
+Résultats vérifiés :
+
+```text
+69 tests réussis sur 69
+47 tests unitaires
+22 tests d'intégration MockMvc, soit 31,88 %
+```
+
+| Indicateur | Couverture |
+| --- | ---: |
+| Instructions | 92,39 % |
+| Branches | 96,88 % |
+| Lignes | 92,37 % |
+| Méthodes | 87,96 % |
+
+Surefire charge Mockito comme agent Java pendant les tests. Cette
+configuration évite l'auto-attachement dynamique de Mockito, qui peut être
+interdit par les JVM récentes, et reste compatible avec l'agent JaCoCo.
+
+Le rapport HTML est disponible dans :
+
+```text
+target/site/jacoco/index.html
+```
+
 
 ### Collection Postman
 
