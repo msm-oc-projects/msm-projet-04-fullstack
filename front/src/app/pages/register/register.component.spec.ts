@@ -1,40 +1,66 @@
-import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { expect } from '@jest/globals';
-
+import { Router } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import { AuthService } from '../../core/service/auth.service';
 import { RegisterComponent } from './register.component';
 
-describe('RegisterComponent', () => {
+describe('RegisterComponent integration', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
+  const authService = { register: jest.fn() };
+  const router = { navigate: jest.fn() };
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     await TestBed.configureTestingModule({
-      declarations: [RegisterComponent],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        ReactiveFormsModule,  
-        MatCardModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule
+      imports: [RegisterComponent],
+      providers: [
+        { provide: AuthService, useValue: authService },
+        { provide: Router, useValue: router }
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('keeps submit disabled when required fields are missing', () => {
+    const button = fixture.nativeElement.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+    expect(component.form.invalid).toBe(true);
+    expect(button.disabled).toBe(true);
+    expect(authService.register).not.toHaveBeenCalled();
+  });
+
+  it('registers and navigates to login', () => {
+    authService.register.mockReturnValue(of(undefined));
+    component.form.setValue({
+      email: 'user@example.com',
+      firstName: 'First',
+      lastName: 'Last',
+      password: 'password'
+    });
+
+    component.submit();
+
+    expect(authService.register).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('displays an error when registration fails', () => {
+    authService.register.mockReturnValue(throwError(() => new Error('Conflict')));
+    component.form.setValue({
+      email: 'user@example.com',
+      firstName: 'First',
+      lastName: 'Last',
+      password: 'password'
+    });
+
+    component.submit();
+    fixture.detectChanges();
+
+    expect(component.onError).toBe(true);
+    expect(fixture.nativeElement.querySelector('.error').textContent).toContain('An error occurred');
   });
 });

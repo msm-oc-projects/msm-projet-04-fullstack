@@ -3,13 +3,13 @@ import { expect } from '@jest/globals';
 
 import { NotFoundComponent } from './not-found.component';
 
-describe('NotFoundComponent', () => {
+describe('NotFoundComponent integration', () => {
   let component: NotFoundComponent;
   let fixture: ComponentFixture<NotFoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ]
+      imports: [NotFoundComponent]
     })
     .compileComponents();
 
